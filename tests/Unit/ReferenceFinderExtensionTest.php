@@ -4,6 +4,7 @@ namespace Phpactor\Extension\ReferenceFinder\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Container\PhpactorContainer;
+use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 use Phpactor\Extension\ReferenceFinder\Tests\Example\SomeDefinitionLocator;
 use Phpactor\Extension\ReferenceFinder\Tests\Example\SomeExtension;
@@ -17,7 +18,8 @@ class ReferenceFinderExtensionTest extends TestCase
     public function testEmptyChainProvider()
     {
         $container = PhpactorContainer::fromExtensions([
-            ReferenceFinderExtension::class
+            ReferenceFinderExtension::class,
+            LoggingExtension::class,
         ]);
 
         $locator = $container->get(ReferenceFinderExtension::SERVICE_DEFINITION_LOCATOR);
@@ -28,7 +30,8 @@ class ReferenceFinderExtensionTest extends TestCase
     {
         $container = PhpactorContainer::fromExtensions([
             ReferenceFinderExtension::class,
-            SomeExtension::class
+            SomeExtension::class,
+            LoggingExtension::class,
         ]);
 
         $locator = $container->get(ReferenceFinderExtension::SERVICE_DEFINITION_LOCATOR);

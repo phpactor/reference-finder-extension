@@ -5,6 +5,7 @@ namespace Phpactor\Extension\ReferenceFinder;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\ReferenceFinder\ChainDefinitionLocationProvider;
 
@@ -24,7 +25,7 @@ class ReferenceFinderExtension implements Extension
                 $locators[] = $container->get($serviceId);
             }
 
-            return new ChainDefinitionLocationProvider($locators);
+            return new ChainDefinitionLocationProvider($locators, $container->get(LoggingExtension::SERVICE_LOGGER));
         });
     }
 

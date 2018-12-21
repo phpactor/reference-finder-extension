@@ -13,7 +13,8 @@
 
     "require": {
         "phpactor/container": "^1.0",
-        "phpactor/reference-finder": "^0.1.0@dev"
+        "phpactor/reference-finder": "^0.1.0@dev",
+        "phpactor/logging-extension": "~0.1"
     },
     "require-dev": {
         "phpstan/phpstan": "^0.10.6",
