@@ -10,7 +10,6 @@ use Phpactor\Extension\ReferenceFinder\Tests\Example\SomeDefinitionLocator;
 use Phpactor\Extension\ReferenceFinder\Tests\Example\SomeExtension;
 use Phpactor\ReferenceFinder\ChainDefinitionLocationProvider;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 
 class ReferenceFinderExtensionTest extends TestCase
@@ -39,6 +38,6 @@ class ReferenceFinderExtensionTest extends TestCase
 
         $location = $locator->locateDefinition(TextDocumentBuilder::create('asd')->build(), ByteOffset::fromInt(1));
         $this->assertEquals(SomeDefinitionLocator::EXAMPLE_OFFSET, $location->offset()->toInt());
-        $this->assertEquals(SomeDefinitionLocator::EXAMPLE_PATH, $location->uri());
+        $this->assertEquals(SomeDefinitionLocator::EXAMPLE_PATH, $location->uri()->path());
     }
 }
