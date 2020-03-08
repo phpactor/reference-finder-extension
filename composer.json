@@ -30,6 +30,13 @@
             "Phpactor\\Extension\\ReferenceFinder\\Tests\\": "tests/"
         }
     },
+    "scripts": {
+        "integrate": [
+            "./vendor/bin/php-cs-fixer fix",
+            "./vendor/bin/phpstan analyse lib -c phpstan.neon",
+            "./vendor/bin/phpunit"
+        ]
+    },
     "extra": {
         "phpactor.extension_class": "Phpactor\\Extension\\ReferenceFinder\\ReferenceFinderExtension",
         "branch-alias": {
