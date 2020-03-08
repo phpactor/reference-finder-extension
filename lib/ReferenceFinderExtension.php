@@ -8,6 +8,7 @@ use Phpactor\Container\Extension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\ReferenceFinder\ChainDefinitionLocationProvider;
+use Phpactor\ReferenceFinder\ChainTypeLocator;
 use RuntimeException;
 
 class ReferenceFinderExtension implements Extension
@@ -16,6 +17,8 @@ class ReferenceFinderExtension implements Extension
     const SERVICE_IMPLEMENTATION_FINDER = 'reference_finder.implementation_finder';
     const TAG_DEFINITION_LOCATOR = 'reference_finder.definition_locator';
     const TAG_IMPLEMENTATION_FINDER = 'reference_finder.implementation_finder';
+    const SERVICE_TYPE_LOCATOR = self::TAG_TYPE_LOCATOR;
+    const TAG_TYPE_LOCATOR = 'reference_finder.type_locator';
 
     /**
      * {@inheritDoc}
@@ -29,6 +32,15 @@ class ReferenceFinderExtension implements Extension
             }
 
             return new ChainDefinitionLocationProvider($locators, $container->get(LoggingExtension::SERVICE_LOGGER));
+        });
+
+        $container->register(self::SERVICE_TYPE_LOCATOR, function (Container $container) {
+            $locators = [];
+            foreach (array_keys($container->getServiceIdsForTag(self::TAG_TYPE_LOCATOR)) as $serviceId) {
+                $locators[] = $container->get($serviceId);
+            }
+
+            return new ChainTypeLocator($locators, $container->get(LoggingExtension::SERVICE_LOGGER));
         });
 
         $container->register(self::SERVICE_IMPLEMENTATION_FINDER, function (Container $container) {
