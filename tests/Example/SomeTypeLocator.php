@@ -5,7 +5,6 @@ namespace Phpactor\Extension\ReferenceFinder\Tests\Example;
 use Phpactor\ReferenceFinder\TypeLocator;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
-use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 
@@ -18,10 +17,10 @@ class SomeTypeLocator implements TypeLocator
      * {@inheritDoc}
      */
     public function locateType(TextDocument $document, ByteOffset $byteOffset): Location
-{
-    return new Location(
-        TextDocumentUri::fromString(self::EXAMPLE_PATH),
-        ByteOffset::fromInt(self::EXAMPLE_OFFSET)
-    );
+    {
+        return new Location(
+            TextDocumentUri::fromString(self::EXAMPLE_PATH),
+            ByteOffset::fromInt(self::EXAMPLE_OFFSET)
+        );
     }
 }

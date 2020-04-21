@@ -8,6 +8,7 @@ use Phpactor\Container\Extension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\ReferenceFinder\ChainDefinitionLocationProvider;
+use Phpactor\ReferenceFinder\ChainImplementationFinder;
 use Phpactor\ReferenceFinder\ChainTypeLocator;
 use RuntimeException;
 
@@ -44,14 +45,12 @@ class ReferenceFinderExtension implements Extension
         });
 
         $container->register(self::SERVICE_IMPLEMENTATION_FINDER, function (Container $container) {
+            $finders = [];
             foreach (array_keys($container->getServiceIdsForTag(self::TAG_IMPLEMENTATION_FINDER)) as $serviceId) {
-                return $container->get($serviceId);
+                $finders[] = $container->get($serviceId);
             }
 
-            throw new RuntimeException(sprintf(
-                'At least one implementation finder must be registered with tag "%s"',
-                self::TAG_IMPLEMENTATION_FINDER
-            ));
+            return new ChainImplementationFinder($finders);
         });
     }
 
