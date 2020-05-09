@@ -9,17 +9,20 @@ use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\ReferenceFinder\ChainDefinitionLocationProvider;
 use Phpactor\ReferenceFinder\ChainImplementationFinder;
+use Phpactor\ReferenceFinder\ChainReferenceFinder;
 use Phpactor\ReferenceFinder\ChainTypeLocator;
-use RuntimeException;
+use Phpactor\ReferenceFinder\ReferenceFinder;
 
 class ReferenceFinderExtension implements Extension
 {
     const SERVICE_DEFINITION_LOCATOR = 'reference_finder.definition_locator';
     const SERVICE_IMPLEMENTATION_FINDER = 'reference_finder.implementation_finder';
+    const SERVICE_TYPE_LOCATOR = self::TAG_TYPE_LOCATOR;
+
     const TAG_DEFINITION_LOCATOR = 'reference_finder.definition_locator';
     const TAG_IMPLEMENTATION_FINDER = 'reference_finder.implementation_finder';
-    const SERVICE_TYPE_LOCATOR = self::TAG_TYPE_LOCATOR;
     const TAG_TYPE_LOCATOR = 'reference_finder.type_locator';
+    const TAG_REFERENCE_FINDER = 'reference_finder.reference_finder';
 
     /**
      * {@inheritDoc}
@@ -51,6 +54,15 @@ class ReferenceFinderExtension implements Extension
             }
 
             return new ChainImplementationFinder($finders);
+        });
+
+        $container->register(ReferenceFinder::class, function (Container $container) {
+            $finders = [];
+            foreach (array_keys($container->getServiceIdsForTag(self::TAG_REFERENCE_FINDER)) as $serviceId) {
+                $finders[] = $container->get($serviceId);
+            }
+
+            return new ChainReferenceFinder($finders);
         });
     }
 

@@ -12,6 +12,7 @@ use Phpactor\Extension\ReferenceFinder\Tests\Example\SomeTypeLocator;
 use Phpactor\ReferenceFinder\ChainDefinitionLocationProvider;
 use Phpactor\ReferenceFinder\ChainTypeLocator;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
+use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
 
@@ -70,6 +71,7 @@ class ReferenceFinderExtensionTest extends TestCase
         $this->assertEquals(SomeTypeLocator::EXAMPLE_OFFSET, $location->offset()->toInt());
         $this->assertEquals(SomeTypeLocator::EXAMPLE_PATH, $location->uri()->path());
     }
+
     public function testReturnsImplementationFinder()
     {
         $container = PhpactorContainer::fromExtensions([
@@ -80,5 +82,17 @@ class ReferenceFinderExtensionTest extends TestCase
 
         $finder = $container->get(ReferenceFinderExtension::SERVICE_IMPLEMENTATION_FINDER);
         $this->assertInstanceOf(ClassImplementationFinder::class, $finder);
+    }
+
+    public function testReturnsReferenceFinder()
+    {
+        $container = PhpactorContainer::fromExtensions([
+            ReferenceFinderExtension::class,
+            SomeExtension::class,
+            LoggingExtension::class,
+        ]);
+
+        $finder = $container->get(ReferenceFinder::class);
+        $this->assertInstanceOf(ReferenceFinder::class, $finder);
     }
 }
