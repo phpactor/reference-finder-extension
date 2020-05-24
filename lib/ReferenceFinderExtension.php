@@ -11,7 +11,9 @@ use Phpactor\ReferenceFinder\ChainDefinitionLocationProvider;
 use Phpactor\ReferenceFinder\ChainImplementationFinder;
 use Phpactor\ReferenceFinder\ChainReferenceFinder;
 use Phpactor\ReferenceFinder\ChainTypeLocator;
+use Phpactor\ReferenceFinder\NameSearcher;
 use Phpactor\ReferenceFinder\ReferenceFinder;
+use Phpactor\ReferenceFinder\Search\NullNameSearcher;
 
 class ReferenceFinderExtension implements Extension
 {
@@ -23,6 +25,7 @@ class ReferenceFinderExtension implements Extension
     const TAG_IMPLEMENTATION_FINDER = 'reference_finder.implementation_finder';
     const TAG_TYPE_LOCATOR = 'reference_finder.type_locator';
     const TAG_REFERENCE_FINDER = 'reference_finder.reference_finder';
+    const TAG_NAME_SEARCHER = 'reference_finder.name_searcher';
 
     /**
      * {@inheritDoc}
@@ -63,6 +66,14 @@ class ReferenceFinderExtension implements Extension
             }
 
             return new ChainReferenceFinder($finders);
+        });
+
+        $container->register(NameSearcher::class, function (Container $container) {
+            foreach (array_keys($container->getServiceIdsForTag(self::TAG_NAME_SEARCHER)) as $serviceId) {
+                return $container->get($serviceId);
+            }
+
+            return new NullNameSearcher();
         });
     }
 
