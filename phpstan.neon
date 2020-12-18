@@ -1,7 +1,6 @@
 includes: {  }
 parameters:
     inferPrivatePropertyTypeFromConstructor: true
-    ignoreErrors: null
     paths:
         - lib
-    level: '7'
+    level: 7
