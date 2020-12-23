@@ -12,7 +12,8 @@
     "require": {
         "phpactor/container": "^1.0",
         "phpactor/logging-extension": "^0.3",
-        "phpactor/reference-finder": "^0.1.4"
+        "phpactor/reference-finder": "^0.1.4",
+        "php": "^7.3"
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.0",
