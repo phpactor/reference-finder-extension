@@ -13,7 +13,7 @@ class SomeExtension implements Extension
     /**
      * {@inheritDoc}
      */
-    public function load(ContainerBuilder $container)
+    public function load(ContainerBuilder $container): void
     {
         $container->register('some_definition_locator', function (Container $container) {
             return new SomeDefinitionLocator();
@@ -30,7 +30,7 @@ class SomeExtension implements Extension
     /**
      * {@inheritDoc}
      */
-    public function configure(Resolver $schema)
+    public function configure(Resolver $schema): void
     {
     }
 }

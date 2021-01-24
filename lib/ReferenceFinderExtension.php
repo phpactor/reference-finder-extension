@@ -30,7 +30,7 @@ class ReferenceFinderExtension implements Extension
     /**
      * {@inheritDoc}
      */
-    public function load(ContainerBuilder $container)
+    public function load(ContainerBuilder $container): void
     {
         $container->register(self::SERVICE_DEFINITION_LOCATOR, function (Container $container) {
             $locators = [];
@@ -80,7 +80,7 @@ class ReferenceFinderExtension implements Extension
     /**
      * {@inheritDoc}
      */
-    public function configure(Resolver $schema)
+    public function configure(Resolver $schema): void
     {
     }
 }
