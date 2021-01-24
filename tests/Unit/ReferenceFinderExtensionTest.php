@@ -18,7 +18,7 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class ReferenceFinderExtensionTest extends TestCase
 {
-    public function testEmptyChainDefinitionLocator()
+    public function testEmptyChainDefinitionLocator(): void
     {
         $container = PhpactorContainer::fromExtensions([
             ReferenceFinderExtension::class,
@@ -29,7 +29,7 @@ class ReferenceFinderExtensionTest extends TestCase
         $this->assertInstanceOf(ChainDefinitionLocationProvider::class, $locator);
     }
 
-    public function testChainDefinitionLocatorLocatorWithRegisteredLocators()
+    public function testChainDefinitionLocatorLocatorWithRegisteredLocators(): void
     {
         $container = PhpactorContainer::fromExtensions([
             ReferenceFinderExtension::class,
@@ -45,7 +45,7 @@ class ReferenceFinderExtensionTest extends TestCase
         $this->assertEquals(SomeDefinitionLocator::EXAMPLE_PATH, $location->uri()->path());
     }
 
-    public function testEmptyChainTypeLocator()
+    public function testEmptyChainTypeLocator(): void
     {
         $container = PhpactorContainer::fromExtensions([
             ReferenceFinderExtension::class,
@@ -56,7 +56,7 @@ class ReferenceFinderExtensionTest extends TestCase
         $this->assertInstanceOf(ChainTypeLocator::class, $locator);
     }
 
-    public function testChainLocatorLocatorWithRegisteredLocators()
+    public function testChainLocatorLocatorWithRegisteredLocators(): void
     {
         $container = PhpactorContainer::fromExtensions([
             ReferenceFinderExtension::class,
@@ -72,7 +72,7 @@ class ReferenceFinderExtensionTest extends TestCase
         $this->assertEquals(SomeTypeLocator::EXAMPLE_PATH, $location->uri()->path());
     }
 
-    public function testReturnsImplementationFinder()
+    public function testReturnsImplementationFinder(): void
     {
         $container = PhpactorContainer::fromExtensions([
             ReferenceFinderExtension::class,
@@ -84,7 +84,7 @@ class ReferenceFinderExtensionTest extends TestCase
         $this->assertInstanceOf(ClassImplementationFinder::class, $finder);
     }
 
-    public function testReturnsReferenceFinder()
+    public function testReturnsReferenceFinder(): void
     {
         $container = PhpactorContainer::fromExtensions([
             ReferenceFinderExtension::class,
